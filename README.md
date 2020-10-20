@@ -4,7 +4,7 @@
 An eCommerce website geared towards handmade crafts. Users will be able to both buy and sell products. <br><br>
 
 ## Code Guidelines
-Reffer to [Guidelines](CodingGuidelines.md)
+Refer to the Guidelines presented [here](CodingGuidelines.md)
 <br><br>
 ## Running the project
 - .NET Core 3.1.X SDK is required
