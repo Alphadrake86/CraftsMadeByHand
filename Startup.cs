@@ -12,7 +12,7 @@ using CraftsMadeByHand.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using CraftsMadeByHand.Models;
+using static CraftsMadeByHand.Models.IdentityHelper;
 
 namespace CraftsMadeByHand
 {
@@ -31,7 +31,7 @@ namespace CraftsMadeByHand
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(IdentityHelper.SetIdentityOptions)
+            services.AddDefaultIdentity<IdentityUser>(SetIdentityOptions)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
@@ -69,7 +69,9 @@ namespace CraftsMadeByHand
                 endpoints.MapRazorPages();
             });
 
-            var serviceProvider = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope();
+            IServiceScope serviceProvider = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope();
+
+            CreateRoles(serviceProvider.ServiceProvider, BuyerRole, SellerRole, AdminRole).Wait();
         }
     }
 }
