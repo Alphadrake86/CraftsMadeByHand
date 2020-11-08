@@ -12,7 +12,7 @@ using CraftsMadeByHand.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using static CraftsMadeByHand.Models.IdentityHelper;
+using CraftsMadeByHand.Models;
 
 namespace CraftsMadeByHand
 {
@@ -31,7 +31,7 @@ namespace CraftsMadeByHand
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(SetIdentityOptions)
+            services.AddDefaultIdentity<IdentityUser>(IdentityHelper.SetIdentityOptions)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
@@ -71,7 +71,9 @@ namespace CraftsMadeByHand
 
             IServiceScope serviceProvider = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope();
 
-            CreateRoles(serviceProvider.ServiceProvider, BuyerRole, SellerRole, AdminRole).Wait();
+            IdentityHelper.CreateRoles(serviceProvider.ServiceProvider, IdentityHelper.BuyerRole, IdentityHelper.SellerRole, IdentityHelper.AdminRole).Wait();
+
+            IdentityHelper.CreateDefaultAdministrator(serviceProvider.ServiceProvider);
         }
     }
 }

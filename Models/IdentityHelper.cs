@@ -43,5 +43,29 @@ namespace CraftsMadeByHand.Models
                 }
             }
         }
+
+        internal static async Task CreateDefaultAdministrator(IServiceProvider serviceProvider)
+        {
+            const string Username = "Admin";
+            const string Password = "Admin";
+            const string Email = "Admin@craftsmadebyhand.com";
+
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            if(userManager.Users.Count() == 0)
+            {
+                IdentityUser Admin = new IdentityUser()
+                {
+                    Email = Email,
+                    EmailConfirmed = true,
+                    UserName = Username,
+
+                };
+
+                // Create Admin and add to role
+                await userManager.CreateAsync(Admin, Password);
+                await userManager.AddToRoleAsync(Admin, AdminRole);
+            }
+        }
     }
 }
