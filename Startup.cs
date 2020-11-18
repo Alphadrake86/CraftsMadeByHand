@@ -73,7 +73,7 @@ namespace CraftsMadeByHand
 
             IdentityHelper.CreateRoles(serviceProvider.ServiceProvider, IdentityHelper.BuyerRole, IdentityHelper.SellerRole, IdentityHelper.AdminRole).Wait();
 
-            IdentityHelper.CreateDefaultAdministrator(serviceProvider.ServiceProvider);
+            IdentityHelper.CreateDefaultAdministrator(serviceProvider.ServiceProvider).Wait();
         }
     }
 }

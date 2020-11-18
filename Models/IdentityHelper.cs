@@ -28,6 +28,10 @@ namespace CraftsMadeByHand.Models
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequireLowercase = false;
             options.Password.RequiredLength = 8;
+
+            // User Options
+            options.User.RequireUniqueEmail = true;
+            
         }
 
         public static async Task CreateRoles(IServiceProvider serviceProvider, params string[] roles)
@@ -54,12 +58,12 @@ namespace CraftsMadeByHand.Models
 
             if(userManager.Users.Count() == 0)
             {
-                IdentityUser Admin = new IdentityUser()
+                IdentityUser Admin = new IdentityUser(Username)
                 {
                     Email = Email,
                     EmailConfirmed = true,
-                    UserName = Username,
-
+                   
+                    
                 };
 
                 // Create Admin and add to role
