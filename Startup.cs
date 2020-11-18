@@ -69,7 +69,11 @@ namespace CraftsMadeByHand
                 endpoints.MapRazorPages();
             });
 
-            var serviceProvider = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope();
+            IServiceScope serviceProvider = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope();
+
+            IdentityHelper.CreateRoles(serviceProvider.ServiceProvider, IdentityHelper.BuyerRole, IdentityHelper.SellerRole, IdentityHelper.AdminRole).Wait();
+
+            IdentityHelper.CreateDefaultAdministrator(serviceProvider.ServiceProvider).Wait();
         }
     }
 }
