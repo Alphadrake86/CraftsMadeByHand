@@ -100,6 +100,7 @@ namespace CraftsMadeByHand.Controllers
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
+
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ProductExists(product.ProductId))

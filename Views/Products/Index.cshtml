@@ -12,6 +12,11 @@
     <a asp-action="Create">Create New</a>
 </p>
 
+<section id="searchbar">
+
+
+</section>
+
 <section id="sidebar">
     <div>
         <h6 class="p-1 border-bottom">Home Furniture</h6>
@@ -48,16 +53,15 @@
         @foreach (var item in Model)
         {
             <li class="list-group-item">
-                <!-- Custom content-->
                 <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                     <div class="media-body order-2 order-lg-1">
-                        <h5 class="mt-0 font-weight-bold mb-2">@item.Title</h5>
+                        <a class="mt-0 font-weight-bold mb-2" asp-action="Details" asp-route-id="@item.ProductId">@item.Title</a>
                         <p class="font-italic text-muted mb-0 small">@item.Description</p>
                         <div class="d-flex align-items-center justify-content-between mt-1">
                             <h6 class="font-weight-bold my-2">@Html.DisplayFor(m => item.Price)</h6>
                         </div>
                     </div><img src="~/img/the_golden_pangolin_by_philipharvey-d8cq0nv.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
-                </div> <!-- End -->
+                </div> 
             </li>
 
         }
