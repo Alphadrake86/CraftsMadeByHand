@@ -1,4 +1,5 @@
 ﻿@model CraftsMadeByHand.Models.Product
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor Http
 
 @{
     ViewData["Title"] = "Details";
@@ -54,9 +55,8 @@
             </div>
         </div>
         <div class="btn-group cart">
-    <button type="button" class="btn btn-success">
-        Add to cart
-    </button>
+            <a class="btn btn-primary" asp-route-id="@Model.ProductId" asp-controller="Cart"
+               asp-action="Add" asp-route-prevURL="@Http.HttpContext.Request.Path">Add to cart</a>
 </div>
     </div>
                         

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,4 +46,17 @@ namespace CraftsMadeByHand.Models
         /// </summary>
         public int SellerId { get; set; }
     }
+    public class ProductComparer : IEqualityComparer<Product>
+    {
+        public bool Equals([AllowNull] Product x, [AllowNull] Product y)
+        {
+            return x.ProductId == y.ProductId;
+        }
+
+        public int GetHashCode([DisallowNull] Product obj)
+        {
+            return obj.ProductId;
+        }
+    }
+
 }
