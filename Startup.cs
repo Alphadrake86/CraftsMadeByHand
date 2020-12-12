@@ -36,6 +36,11 @@ namespace CraftsMadeByHand
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(3);
+                options.Cookie.IsEssential = true;
+            });
         }
 
         

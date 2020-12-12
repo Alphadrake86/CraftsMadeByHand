@@ -1,0 +1,62 @@
+﻿@model IEnumerable<CraftsMadeByHand.Models.Product>
+
+@{
+    ViewData["Title"] = "Summary";
+}
+
+<h1>Cart</h1>
+
+@if (Model.Count() == 0)
+{
+<h2>Your cart is empty</h2>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Amount
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.Distinct(new ProductComparer()))
+        {
+
+            <tr>
+                <td>
+                    @Model.Where(m => m.ProductId == item.ProductId).Count()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+
+            </tr>
+            
+        }
+        <tr>
+            <td>
+                Total:
+            </td>
+            <td>
+                
+            </td>
+            <td>
+                @Model.Sum(i=>i.Price).ToString("C")
+            </td>
+        </tr>
+    </tbody>
+</table>
+}

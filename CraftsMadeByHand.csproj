@@ -30,4 +30,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Views\Cart\Summary.cshtml" />
+  </ItemGroup>
+
 </Project>

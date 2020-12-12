@@ -65,10 +65,11 @@ namespace CraftsMadeByHand.Models
                    
                     
                 };
-
+                /*
                 // Create Admin and add to role
                 await userManager.CreateAsync(Admin, Password);
                 await userManager.AddToRoleAsync(Admin, AdminRole);
+                */
             }
         }
     }
