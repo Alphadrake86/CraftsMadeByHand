@@ -20,7 +20,7 @@ namespace CraftsMadeByHand.Models
         {
             // Sign In options
             options.SignIn.RequireConfirmedAccount = true;
-            options.SignIn.RequireConfirmedEmail = true;
+            options.SignIn.RequireConfirmedEmail = false;
 
             // Password options
             options.Password.RequireDigit = false;
@@ -51,25 +51,26 @@ namespace CraftsMadeByHand.Models
         internal static async Task CreateDefaultAdministrator(IServiceProvider serviceProvider)
         {
             const string Username = "Admin";
-            const string Password = "Admin";
+            const string Password = "AdminPassword";
             const string Email = "Admin@craftsmadebyhand.com";
 
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var admins = await userManager.GetUsersInRoleAsync(AdminRole);
 
-            if(userManager.Users.Count() == 0)
+            if (admins.Count == 0 )
             {
                 IdentityUser Admin = new IdentityUser(Username)
                 {
                     Email = Email,
                     EmailConfirmed = true,
-                   
+                    
                     
                 };
-                /*
+                
                 // Create Admin and add to role
                 await userManager.CreateAsync(Admin, Password);
                 await userManager.AddToRoleAsync(Admin, AdminRole);
-                */
+                
             }
         }
     }
