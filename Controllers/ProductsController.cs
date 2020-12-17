@@ -45,7 +45,7 @@ namespace CraftsMadeByHand.Controllers
         }
 
         // GET: Products/Create
-        [Authorize(Roles = IdentityHelper.AdminRole)]
+        [Authorize(Roles = IdentityHelper.AdminRole+","+IdentityHelper.SellerRole)]
         public IActionResult Create()
         {
             return View();
@@ -88,6 +88,7 @@ namespace CraftsMadeByHand.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = IdentityHelper.AdminRole + "," + IdentityHelper.SellerRole)]
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,Title,Description,Price,SellerId")] Product product)
         {
             if (id != product.ProductId)
@@ -120,6 +121,7 @@ namespace CraftsMadeByHand.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = IdentityHelper.AdminRole + "," + IdentityHelper.SellerRole)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
