@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using CraftsMadeByHand.Data;
 using CraftsMadeByHand.Models;
+using System.IO;
 
 namespace CraftsMadeByHand.Controllers
 {
@@ -57,12 +58,45 @@ namespace CraftsMadeByHand.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,Title,Description,Price,SellerId")] Product product, IFormFileCollection files)
+        public async Task<IActionResult> Create([Bind("ProductId,Title,Description,Price,SellerId,")] Product product, List<IFormFile> UserImages)
         {
             if (ModelState.IsValid)
             {
-                
                 _context.Add(product);
+                await _context.SaveChangesAsync();
+                if (UserImages.Count > 0)
+                {
+
+
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        foreach (IFormFile file in UserImages)
+                        {
+                            await file.CopyToAsync(memoryStream);
+
+                            // Upload the file if less than 2 MB
+                            if (memoryStream.Length < 2097152)
+                            {
+                                var image = new Image()
+                                {
+                                    Content = memoryStream.ToArray(),
+                                    ProductId = product.ProductId,
+                                    FileName = file.FileName
+                                };
+
+                                _context.Images.Add(image);
+                                await _context.SaveChangesAsync();
+                            }
+                            else
+                            {
+                                
+                                ModelState.AddModelError("File", "The file is too large.");
+                            }
+                        }
+                    }
+                }
+
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -156,5 +190,13 @@ namespace CraftsMadeByHand.Controllers
         {
             return _context.Products.Any(e => e.ProductId == id);
         }
+
+        public IActionResult GetTopProductImageFor(int id)
+        {
+            Image img = ImageHelper.GetTopImageByProductId(_context, id);
+            return File(img.Content, "image/png");
+        }
     }
+
+    
 }

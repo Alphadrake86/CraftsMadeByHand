@@ -1,4 +1,4 @@
-﻿@model CraftsMadeByHand.Models.Product
+﻿@model CraftsMadeByHand.Models.ProductVMWithImages
 
 
 @{
@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -33,6 +33,9 @@
                 <input asp-for="SellerId" class="form-control" />
                 <span asp-validation-for="SellerId" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <input name="UserImages" type="file" multiple>
+            </div>  
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

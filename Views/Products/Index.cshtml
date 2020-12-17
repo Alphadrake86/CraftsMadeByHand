@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<CraftsMadeByHand.Models.Product>
+@inject CraftsMadeByHand.Data.ApplicationDbContext _context;
 
 @{
     ViewData["Title"] = "Index";
@@ -61,7 +62,7 @@
                             <h6 class="font-weight-bold my-2">@Html.DisplayFor(m => item.Price)</h6>
                         </div>
                     </div>
-                    <img src="~/img/the_golden_pangolin_by_philipharvey-d8cq0nv.jpg" alt="product image" width="200" class="ml-lg-5 order-1 order-lg-2">
+                    <img src="@Url.Action("GetTopProductImageFor", "Products", new { id = item.ProductId })" width="200" class="ml-lg-5 order-1 order-lg-2">
                 </div> 
             </li>
 
