@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using CraftsMadeByHand.Data;
 using CraftsMadeByHand.Models;
@@ -44,6 +45,7 @@ namespace CraftsMadeByHand.Controllers
         }
 
         // GET: Products/Create
+        [Authorize(Roles = IdentityHelper.AdminRole+","+IdentityHelper.SellerRole)]
         public IActionResult Create()
         {
             return View();
@@ -86,6 +88,7 @@ namespace CraftsMadeByHand.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = IdentityHelper.AdminRole + "," + IdentityHelper.SellerRole)]
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,Title,Description,Price,SellerId")] Product product)
         {
             if (id != product.ProductId)
@@ -100,6 +103,7 @@ namespace CraftsMadeByHand.Controllers
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
+
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ProductExists(product.ProductId))
@@ -117,6 +121,7 @@ namespace CraftsMadeByHand.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = IdentityHelper.AdminRole + "," + IdentityHelper.SellerRole)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

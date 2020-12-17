@@ -4,50 +4,68 @@
     ViewData["Title"] = "Index";
 }
 
+<link rel="stylesheet" href="~/css/Products.css" type="text/css" />
+
 <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SellerId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SellerId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<section id="searchbar">
+
+
+</section>
+
+<section id="sidebar">
+    <div>
+        <h6 class="p-1 border-bottom">Home Furniture</h6>
+        <ul>
+            <li><a href="#">Living</a></li>
+            <li><a href="#">Dining</a></li>
+            <li><a href="#">Office</a></li>
+            <li><a href="#">Bedroom</a></li>
+            <li><a href="#">Kitchen</a></li>
+        </ul>
+    </div>
+    <div>
+        <h6 class="p-1 border-bottom">Filter By</h6>
+        <p class="mb-2">Color</p>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-action mb-2 rounded"><a href="#"> <span class="fa fa-circle pr-1" id="red"></span>Red </a></li>
+            <li class="list-group-item list-group-item-action mb-2 rounded"><a href="#"> <span class="fa fa-circle pr-1" id="teal"></span>Teal </a></li>
+            <li class="list-group-item list-group-item-action mb-2 rounded"><a href="#"> <span class="fa fa-circle pr-1" id="blue"></span>Blue </a></li>
+        </ul>
+    </div>
+    <div>
+        <h6>Type</h6>
+        <form class="ml-md-2">
+            <div class="form-inline border rounded p-sm-2 my-2"> <input type="radio" name="type" id="boring"> <label for="boring" class="pl-1 pt-sm-0 pt-1">Boring</label> </div>
+            <div class="form-inline border rounded p-sm-2 my-2"> <input type="radio" name="type" id="ugly"> <label for="ugly" class="pl-1 pt-sm-0 pt-1">Ugly</label> </div>
+            <div class="form-inline border rounded p-md-2 p-sm-1"> <input type="radio" name="type" id="notugly"> <label for="notugly" class="pl-1 pt-sm-0 pt-1">Not Ugly</label> </div>
+        </form>
+    </div>
+</section>
+
+<section id="products">
+    <ul class="list-group productul">
+
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item">
+                <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                    <div class="media-body order-2 order-lg-1">
+                        <a class="mt-0 font-weight-bold mb-2" asp-action="Details" asp-route-id="@item.ProductId">@item.Title</a>
+                        <p class="font-italic text-muted mb-0 small">@item.Description</p>
+                        <div class="d-flex align-items-center justify-content-between mt-1">
+                            <h6 class="font-weight-bold my-2">@Html.DisplayFor(m => item.Price)</h6>
+                        </div>
+                    </div>
+                    <img src="~/img/the_golden_pangolin_by_philipharvey-d8cq0nv.jpg" alt="product image" width="200" class="ml-lg-5 order-1 order-lg-2">
+                </div> 
+            </li>
+
+        }
+
+    </ul>
+</section>
