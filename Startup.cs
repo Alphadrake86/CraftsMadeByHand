@@ -31,16 +31,30 @@ namespace CraftsMadeByHand
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDefaultIdentity<IdentityUser>(IdentityHelper.SetIdentityOptions)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdministratorRole",
+                     policy => policy.RequireRole(IdentityHelper.AdminRole));
+
+                options.AddPolicy("SellerPriv",
+                     policy => policy.RequireRole(IdentityHelper.AdminRole, IdentityHelper.SellerRole));
+            });
+
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromDays(3);
                 options.Cookie.IsEssential = true;
             });
+
+            services.AddHttpContextAccessor();
         }
 
         

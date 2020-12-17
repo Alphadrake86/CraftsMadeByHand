@@ -48,7 +48,7 @@
 </section>
 
 <section id="products">
-    <ul class="list-group">
+    <ul class="list-group productul">
 
         @foreach (var item in Model)
         {
@@ -60,7 +60,8 @@
                         <div class="d-flex align-items-center justify-content-between mt-1">
                             <h6 class="font-weight-bold my-2">@Html.DisplayFor(m => item.Price)</h6>
                         </div>
-                    </div><img src="~/img/the_golden_pangolin_by_philipharvey-d8cq0nv.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+                    </div>
+                    <img src="~/img/the_golden_pangolin_by_philipharvey-d8cq0nv.jpg" alt="product image" width="200" class="ml-lg-5 order-1 order-lg-2">
                 </div> 
             </li>
 

@@ -56,7 +56,41 @@ namespace CraftsMadeByHand
         {
             List<Product> cartList = GetProductsFromCart(accessor);
             cartList.Add(p);
-            
+
+            SetCartData(accessor, cartList);
+        }
+
+        /// <summary>
+        /// Removes a single item from the cart. May become obselete.
+        /// </summary>
+        /// <param name="accessor"></param>
+        /// <param name="p"></param>
+        public static void RemoveSingleFromCart(IHttpContextAccessor accessor, Product p)
+        {
+            List<Product> cartList = GetProductsFromCart(accessor);
+            cartList.Remove(p);
+
+            SetCartData(accessor, cartList);
+        }
+
+        /// <summary>
+        /// Removes all of a type of product from the cookie
+        /// </summary>
+        /// <param name="accessor"></param>
+        /// <param name="p"></param>
+        public static void RemoveManyFromCart(IHttpContextAccessor accessor, Product p)
+        {
+            List<Product> cartList = GetProductsFromCart(accessor);
+            while (cartList.Contains(p))
+            {
+                cartList.Remove(p);
+            }               
+
+            SetCartData(accessor, cartList);
+        }
+
+        private static void SetCartData(IHttpContextAccessor accessor, List<Product> cartList)
+        {
             string data = JsonConvert.SerializeObject(cartList);
             CookieOptions options = new CookieOptions
             {
@@ -67,6 +101,7 @@ namespace CraftsMadeByHand
 
             accessor.HttpContext.Response.Cookies.Append(cartCookie, data, options);
         }
+        
 
         /// <summary>
         /// returns the total number of products in the cart

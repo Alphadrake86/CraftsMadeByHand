@@ -20,7 +20,7 @@ body {
     float: right
 }
 
-ul {
+.productul {
     list-style: none;
     padding: 5px
 }
@@ -76,7 +76,7 @@ li a {
     padding: 0;
     margin: 0
 }
-
+/*
 @media(min-width:991px) {
     .navbar-nav {
         margin-left: 35%
@@ -207,4 +207,4 @@ li a {
     #mobile-filter {
         padding: 10px
     }
-}
+}*/
