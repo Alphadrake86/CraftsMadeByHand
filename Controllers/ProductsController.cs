@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using CraftsMadeByHand.Data;
 using CraftsMadeByHand.Models;
@@ -44,6 +45,7 @@ namespace CraftsMadeByHand.Controllers
         }
 
         // GET: Products/Create
+        [Authorize(Roles = IdentityHelper.AdminRole)]
         public IActionResult Create()
         {
             return View();
