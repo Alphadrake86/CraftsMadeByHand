@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 
 namespace CraftsMadeByHand.Models
 {
-    public class ImageHelper
+    /// <summary>
+    /// A class created to help with getting images
+    /// </summary>
+    public static class ImageHelper
     {
     }
 }

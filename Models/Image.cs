@@ -14,10 +14,20 @@ namespace CraftsMadeByHand.Models
         /// <summary>
         /// The image path on the disk
         /// </summary>
-        public string Path { get; set; }
+        public int ID { get; set; }
         /// <summary>
-        /// The product that this image is for
+        /// The product that this image is for.
         /// </summary>
         public int ProductId { get; set; }
+
+        /// <summary>
+        /// The actual content of the image
+        /// </summary>
+        public byte[] Content { get; set; }
+
+        /// <summary>
+        /// The name of the uploaded file. Only used by the uploading user.
+        /// </summary>
+        public string FileName { get; set; }
     }
 }

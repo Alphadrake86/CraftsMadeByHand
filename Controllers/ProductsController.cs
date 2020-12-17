@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using CraftsMadeByHand.Data;
 using CraftsMadeByHand.Models;
@@ -56,10 +57,11 @@ namespace CraftsMadeByHand.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,Title,Description,Price,SellerId")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductId,Title,Description,Price,SellerId")] Product product, IFormFileCollection files)
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
