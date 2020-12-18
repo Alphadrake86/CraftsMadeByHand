@@ -12,7 +12,7 @@ namespace CraftsMadeByHand.Models
     /// </summary>
     public static class ImageHelper
     {
-        public static void AddImage(ApplicationDbContext _context, IFormFile file)
+        public static void AddImage(ApplicationDbContext _context, Image img)
         {
 
         }
@@ -26,6 +26,23 @@ namespace CraftsMadeByHand.Models
         public static Image GetDefaultImage(ApplicationDbContext _context)
         {
             return _context.Images.FirstOrDefault(img => img.ID == 1);
+        }
+
+        public static Image GetImageById(ApplicationDbContext _context, int id)
+        {
+            Image img = _context.Images.FirstOrDefault(img => img.ID == id);
+            return img ?? GetDefaultImage(_context);
+        }
+
+        public static List<Image> GetAllProductImages(ApplicationDbContext _context, int id)
+        {
+            return _context.Images.Where(img => img.ProductId == id).ToList();
+        }
+
+        public static async Task DeleteAllImagesByProductId(ApplicationDbContext _context, int id)
+        {
+            _context.Images.RemoveRange(GetAllProductImages(_context, id));
+            await _context.SaveChangesAsync();
         }
     }
 }

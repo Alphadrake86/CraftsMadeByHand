@@ -74,13 +74,10 @@ namespace CraftsMadeByHand.Controllers
 
                 if (UserImages.Count > 0)
                 {
-
-
-                    using (var memoryStream = new MemoryStream())
-                    {
                         foreach (IFormFile file in UserImages)
                         {
-                            await file.CopyToAsync(memoryStream);
+                        var memoryStream = new MemoryStream();
+                        await file.CopyToAsync(memoryStream);
 
                             // Upload the file if less than 2 MB
                             if (memoryStream.Length < 2097152)
@@ -101,8 +98,8 @@ namespace CraftsMadeByHand.Controllers
                                 ModelState.AddModelError("File", "The file is too large.");
                             }
                         }
-                    }
                 }
+                
 
                 
                 await _context.SaveChangesAsync();
@@ -203,6 +200,12 @@ namespace CraftsMadeByHand.Controllers
         public IActionResult GetTopProductImageFor(int id)
         {
             Image img = ImageHelper.GetTopImageByProductId(_context, id);
+            return File(img.Content, "image/png");
+        }
+
+        public IActionResult GetImage(int imgId)
+        {
+            Image img = ImageHelper.GetImageById(_context, imgId);
             return File(img.Content, "image/png");
         }
     }
