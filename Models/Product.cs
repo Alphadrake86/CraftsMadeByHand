@@ -39,7 +39,7 @@ namespace CraftsMadeByHand.Models
         /// <summary>
         /// The Id of the Seller of the product.
         /// </summary>
-        public int SellerId { get; set; }
+        public string SellerId { get; set; }
     }
 
     public class ProductVMWithImages

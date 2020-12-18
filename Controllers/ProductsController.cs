@@ -10,16 +10,19 @@ using Microsoft.EntityFrameworkCore;
 using CraftsMadeByHand.Data;
 using CraftsMadeByHand.Models;
 using System.IO;
+using Microsoft.AspNetCore.Identity;
 
 namespace CraftsMadeByHand.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Products
@@ -58,12 +61,17 @@ namespace CraftsMadeByHand.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,Title,Description,Price,SellerId,")] Product product, List<IFormFile> UserImages)
+        [Authorize]
+        public async Task<IActionResult> Create([Bind("ProductId,Title,Description,Price")] Product product, List<IFormFile> UserImages)
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                product.SellerId = user.Id;
+                    
                 _context.Add(product);
                 await _context.SaveChangesAsync();
+
                 if (UserImages.Count > 0)
                 {
 
@@ -182,6 +190,7 @@ namespace CraftsMadeByHand.Controllers
         {
             var product = await _context.Products.FindAsync(id);
             _context.Products.Remove(product);
+            await ImageHelper.DeleteAllImagesByProductId(_context, id);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
