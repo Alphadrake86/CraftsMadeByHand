@@ -89,6 +89,11 @@ namespace CraftsMadeByHand
             SetCartData(accessor, cartList);
         }
 
+        /// <summary>
+        /// This code was used repeatedly, so I refactored it into a method
+        /// </summary>
+        /// <param name="accessor"></param>
+        /// <param name="cartList"></param>
         private static void SetCartData(IHttpContextAccessor accessor, List<Product> cartList)
         {
             string data = JsonConvert.SerializeObject(cartList);

@@ -23,7 +23,7 @@ namespace CraftsMadeByHand.Controllers
         }
 
         /// <summary>
-        /// dds a product to the shopping cart
+        /// Adds a product to the shopping cart
         /// </summary>
         /// <param name="id">the id of the product to add</param>
         /// <returns></returns>

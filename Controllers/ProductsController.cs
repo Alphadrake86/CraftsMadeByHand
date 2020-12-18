@@ -74,30 +74,30 @@ namespace CraftsMadeByHand.Controllers
 
                 if (UserImages.Count > 0)
                 {
-                        foreach (IFormFile file in UserImages)
-                        {
+                    foreach (IFormFile file in UserImages)
+                    {
                         var memoryStream = new MemoryStream();
                         await file.CopyToAsync(memoryStream);
 
-                            // Upload the file if less than 2 MB
-                            if (memoryStream.Length < 2097152)
+                        // Upload the file if less than 2 MB
+                        if (memoryStream.Length < 2097152)
+                        {
+                            var image = new Image()
                             {
-                                var image = new Image()
-                                {
-                                    Content = memoryStream.ToArray(),
-                                    ProductId = product.ProductId,
-                                    FileName = file.FileName
-                                };
+                                Content = memoryStream.ToArray(),
+                                ProductId = product.ProductId,
+                                FileName = file.FileName
+                            };
 
-                                _context.Images.Add(image);
-                                await _context.SaveChangesAsync();
-                            }
-                            else
-                            {
-                                
-                                ModelState.AddModelError("File", "The file is too large.");
-                            }
+                            _context.Images.Add(image);
+                            await _context.SaveChangesAsync();
                         }
+                        else
+                        {
+                                
+                            ModelState.AddModelError("File", "The file is too large.");
+                        }
+                    }
                 }
                 
 
@@ -197,12 +197,14 @@ namespace CraftsMadeByHand.Controllers
             return _context.Products.Any(e => e.ProductId == id);
         }
 
+        //gets the default image by product id, for displaying on the ndex page
         public IActionResult GetTopProductImageFor(int id)
         {
             Image img = ImageHelper.GetTopImageByProductId(_context, id);
             return File(img.Content, "image/png");
         }
 
+        //Gets am image by image id, for displaying
         public IActionResult GetImage(int imgId)
         {
             Image img = ImageHelper.GetImageById(_context, imgId);
