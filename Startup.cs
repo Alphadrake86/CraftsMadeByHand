@@ -89,7 +89,7 @@ namespace CraftsMadeByHand
             });
 
             IServiceScope serviceProvider = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope();
-            var dbContext = serviceProvider.ServiceProvider.GetService<ApplicationDbContext>();
+            ApplicationDbContext dbContext = serviceProvider.ServiceProvider.GetService<ApplicationDbContext>(); 
 
             IdentityHelper.CreateRoles(serviceProvider.ServiceProvider, IdentityHelper.BuyerRole, IdentityHelper.SellerRole, IdentityHelper.AdminRole).Wait();
 
